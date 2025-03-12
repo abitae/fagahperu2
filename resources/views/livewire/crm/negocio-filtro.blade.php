@@ -29,4 +29,13 @@
             <option value="PAGADO">PAGADO</option>
         </select>
     </div>
+    <div class="relative pr-2 md:w-40">
+        <select wire:model.live="typeFilter" id="typeFilter"
+            class="block text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="">*Tipo de negocio*</option>
+            <option value="MARCA">MARCA</option>
+            <option value="PROVEEDOR">PROVEEDOR</option>
+            <option value="OTRO">OTRO</option>
+        </select>
+    </div>
 </div>

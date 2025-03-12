@@ -34,7 +34,6 @@
 
             </div>
             <div class="grid grid-cols-6 gap-1">
-
                 <div class="col-span-3">
                     <x-text-input wire:model.live='negocioForm.code' type='text' for='code' label='Codigo'
                         placeholder='Ingrese codigo' required />
@@ -58,14 +57,6 @@
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                 </div>
                 <div class="col-span-3">
-                    <x-select-input wire:model.live='negocioForm.priority' for='priority' label='Prioridad'>
-                        <option value="">--Select--</option>
-                        <option value="ALTA">ALTA</option>
-                        <option value="MEDIA">MEDIA</option>
-                        <option value="BAJA">BAJA</option>
-                    </x-select-input>
-                </div>
-                <div class="col-span-3">
                     <label for="Monto aproximado" class="block text-sm font-medium text-gray-900 dark:text-white">
                         Monto cierre
                     </label>
@@ -73,7 +64,16 @@
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="monto cierre" required="">
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-2">
+                    <x-select-input wire:model.live='negocioForm.priority' for='priority' label='Prioridad'>
+                        <option value="">--Select--</option>
+                        <option value="ALTA">ALTA</option>
+                        <option value="MEDIA">MEDIA</option>
+                        <option value="BAJA">BAJA</option>
+                    </x-select-input>
+                </div>
+
+                <div class="col-span-2">
                     <x-select-input wire:model.live='negocioForm.stage' for='stage' label='Estado'>
                         <option value="">--Select--</option>
                         <option value="PROCESO">PROCESO</option>
@@ -81,12 +81,24 @@
                         <option value="PAGADO">PAGADO</option>
                     </x-select-input>
                 </div>
+                <div class="col-span-2">
+                    <x-select-input wire:model.live='negocioForm.type' for='stage' label='Tipo de negocio'>
+                        <option value="">--Select--</option>
+                        <option value="MARCA">MARCA</option>
+                        <option value="PROVEEDOR">PROVEEDOR</option>
+                        <option value="OTRO">OTRO</option>
+                    </x-select-input>
+                </div>
+
                 <div class="col-span-6">
                     <x-area-input wire:model.live='negocioForm.description' type='text' for='description'
                         label='Description' placeholder='Ingrese descripcion' required>
                     </x-area-input>
                 </div>
-                <div class="col-full">
+                <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5 dark:border-gray-600">
+                    <x-button.button-danger type="button" wire:click="$toggle('isOpenModal')">
+                        Cancel
+                    </x-button.button-danger>
                     <x-button.button-save type='submit'>
                         Guardar
                     </x-button.button-save>
@@ -98,7 +110,7 @@
 @endif
 @if ($isOpenCustomer)
 <x-modal title="CREAR CLIENTE" maxWidth='3xl'>
-    <form class="form" wire:submit="createCustomerForm">
+    <form class="form" wire:submit.prevent="createCustomerForm">
         <div class="p-4 space-y-4 md:p-5">
             <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-2">
@@ -203,7 +215,7 @@
             </div>
         </div>
         <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5 dark:border-gray-600">
-            <x-button.button-danger type="button" wire:click="$toggle('isOpenModal')">
+            <x-button.button-danger type="button" wire:click="$toggle('isOpenCustomer')">
                 Cancel
             </x-button.button-danger>
             <x-button.button-save type='submit'>

@@ -92,6 +92,7 @@ class NegocioLive extends Component
 
     public function createNegocio()
     {
+        
         if ($this->negocioForm->store()) {
             $this->message('success', 'En hora buena!', 'Registro creado correctamente!');
             $this->isOpenModal = false;
