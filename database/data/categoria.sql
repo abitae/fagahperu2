@@ -1,0 +1,16 @@
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (1,"Sillón Presidencial","Sillón Presidencial",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (2,"Sillón Ejecutivo","Sillón Ejecutivo",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (3,"Sillón Gerencial","Sillón Gerencial",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (4,"Silla de Visita","Silla de Visita",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (5,"Silla Cajera","Silla Cajera",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (6,"Sillón Gamer","Sillón Gamer",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (7,"Silla Operativa","Silla Operativa",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (8,"Silla Swan","Silla Swan",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (9,"Silla Plegable","Silla Plegable",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (10,"Butaca","Butaca",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (11,"Butaca Giratorio","Butaca Giratorio",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (12,"Silla de Plástico","Silla de Plástico",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (13,"Silla Escolar","Silla Escolar",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (14,"Silla Tolix Bar","Silla Tolix Bar",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (15,"Silla Cromada de Visita","Silla Cromada de Visita",1);
+INSERT INTO `categories`(`id`, `code`, `name`, `isActive`) VALUES (16,"Taburete Giratoria","Taburete Giratoria",1);
