@@ -24,44 +24,18 @@
                         </th>
                         <th scope="col"
                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                            Fecha cierre
+                            Fecha / Estado
                         </th>
-                        <th scope="col"
-                            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                            Estado
-                        </th>
-                        <th scope="col"
-                            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                            Activo
-                        </th>
+
                         <th scope="col"
                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                             Actions
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-
+                <tbody class="divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                     @forelse ($this->negocios as $negocio)
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <td colspan="8">
-                            <div class="w-full h-1 bg-gray-200 rounded-full dark:bg-gray-700">
-                                @switch($negocio->stage)
-                                @case('PROCESO')
-                                <div class="h-1 bg-red-500 rounded-full" style="width: 25%"></div>
-                                @break
-                                @case('ACEPTADA')
-                                <div class="h-1 bg-yellow-400 rounded-full" style="width: 50%"></div>
-                                @break
-                                @case('PAGADO')
-                                <div class="h-1 bg-green-400 rounded-full" style="width: 100%"></div>
-                                @break
-                                @default
-                                @endswitch
-                            </div>
-                        </td>
-                    </tr>
-                    <tr wire:key='negocioo-{{ $negocio->id }}' class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <tr wire:key='negocioo-{{ $negocio->id }}' class="border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                         <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
                             {{ $negocio->code }}
                         </td>
@@ -79,12 +53,22 @@
                             {{ $negocio->user->name }}
                         </td>
                         <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
-                            {{ $negocio->date_closing }}
-                        </td>
-                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
-                            {{ $negocio->stage }}
-                        </td>
-                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
+                            {{ $negocio->date_closing }} <br>
+                            {{ $negocio->stage }} <br>
+                            <div class="w-full h-1 bg-gray-200 rounded-full dark:bg-gray-700">
+                                @switch($negocio->stage)
+                                @case('PROCESO')
+                                <div class="h-1 bg-red-600 rounded-full" style="width: 25%"></div>
+                                @break
+                                @case('ACEPTADA')
+                                <div class="h-1 bg-yellow-400 rounded-full" style="width: 50%"></div>
+                                @break
+                                @case('PAGADO')
+                                <div class="h-1 bg-green-400 rounded-full" style="width: 100%"></div>
+                                @break
+                                @default
+                                @endswitch
+                            </div>
                             <button wire:click='estado({{ $negocio->id }})'
                                 wire:confirm.prompt="Estas seguro de eliminar registro?\n\nEscriba 'SI' para confirmar!|SI"
                                 class="flex items-center">
@@ -101,26 +85,7 @@
                             </x-button.button-view>
                         </td>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <td colspan="8">
-                            <div class="w-full h-1 bg-gray-200 rounded-full dark:bg-gray-700">
-                                @switch($negocio->stage)
-                                @case('PAGADO')
-                                <div class="h-1 bg-green-400 rounded-full" style="width: 100%"></div>
-                                @break
 
-                                @case('PROCESO')
-                                <div class="h-1 bg-red-500 rounded-full" style="width: 25%"></div>
-                                @break
-
-                                @case('ACEPTADA')
-                                <div class="h-1 bg-yellow-400 rounded-full" style="width: 50%"></div>
-                                @break
-                                @default
-                                @endswitch
-                            </div>
-                        </td>
-                    </tr>
                     @empty
                     @endforelse
                 </tbody>

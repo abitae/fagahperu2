@@ -75,26 +75,18 @@ class ProductLive extends Component
     public function products()
     {
         return Product::query()
-            ->when($this->lineFilter, function ($query) {
-                $query->where('line_id', $this->lineFilter);
-            })
-            ->when($this->categoryFilter, function ($query) {
-                $query->where('category_id', $this->categoryFilter);
-            })
-            ->when($this->brandFilter, function ($query) {
-                $query->where('brand_id', $this->brandFilter);
-            })
-            ->when($this->search, function ($query) {
-                $query->where('code', 'LIKE', '%' . $this->search . '%')
-                    ->orWhere('code_fabrica', 'LIKE', '%' . $this->search . '%')
-                    ->orWhere('code_peru', 'LIKE', '%' . $this->search . '%');
-            })
-            ->when($this->stockFilter, function ($query) {
-                $query->where('stock', '>=', $this->stockFilter);
-            })
+            ->when($this->lineFilter, fn($query) => $query->where('line_id', $this->lineFilter))
+            ->when($this->categoryFilter, fn($query) => $query->where('category_id', $this->categoryFilter))
+            ->when($this->brandFilter, fn($query) => $query->where('brand_id', $this->brandFilter))
+            ->when($this->search, fn($query) => $query->where(function ($query) {
+            $query->where('code', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('code_fabrica', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('code_peru', 'LIKE', '%' . $this->search . '%');
+            }))
+            ->when($this->stockFilter, fn($query) => $query->where('stock', '>=', $this->stockFilter))
             ->where('isActive', $this->isActive)
             ->latest()
-            ->paginate($this->num, '*', 'page');
+            ->paginate($this->num, ['*'], 'page');
     }
     public function render()
     {
@@ -198,7 +190,6 @@ class ProductLive extends Component
         }
         try {
             $product = Excel::import(new ProductsCatalogoImport, $this->file);
-            //dd($product);
             $this->message('success', 'En hora buena!', 'Archivo procesado correctamente!');
             $this->file = null;
             infoLog('Import product catalogo', Auth::user()->name);

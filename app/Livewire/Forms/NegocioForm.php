@@ -13,6 +13,7 @@ use Storage;
 class NegocioForm extends Form
 {
     public ?Negocio $negocio;
+    public ?Customer $customer;
     #[Validate('required|min:1')]
     public $customer_id = '';
     #[Validate('required|min:1')]
@@ -44,6 +45,11 @@ class NegocioForm extends Form
         $this->monto_aprox = $negocio->monto_aprox;
         $this->stage = $negocio->stage;
         $this->description = $negocio->description;
+    }
+    public function setCustomerId($customer)
+    {
+        $this->customer = $customer;
+        $this->customer_id = $customer->id;
     }
     public function store()
     {

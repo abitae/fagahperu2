@@ -67,6 +67,31 @@ class CustomerForm extends Form
             return false;
         }
     }
+    public function storeId()
+    {
+        $this->validate();
+
+        try {
+            if (gettype($this->archivo) != 'string') {
+                $this->archivo = $this->archivo->store('customer/pdf');
+            }
+            $customer = Customer::create([
+                'type_id' => $this->type_id,
+                'type_code' => $this->type_code,
+                'code' => $this->code,
+                'first_name' => $this->first_name,
+                'phone' => $this->phone,
+                'email' => $this->email,
+                'address' => $this->address,
+                'archivo' => $this->archivo,
+            ]);
+            infoLog('Customer store', $this->code);
+            return $customer;
+        } catch (\Exception $e) {
+            errorLog('Customer store', $e);
+            return null;
+        }
+    }
     public function update()
     {
         try {

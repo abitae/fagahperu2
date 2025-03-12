@@ -26,7 +26,7 @@ class ProductLive extends Component
     {
         $this->start_date = Carbon::now('GMT-5')->startOfDay()->format('Y-m-d');
         $this->end_date = Carbon::now('GMT-5')->endOfDay()->format('Y-m-d');
-        $this->convenioMarco = AcuerdoMarco::first()->code;
+        $this->convenioMarco = AcuerdoMarco::firstOrFail()->code;
     }
     #[Computed]
     public function acuerdosMarco()

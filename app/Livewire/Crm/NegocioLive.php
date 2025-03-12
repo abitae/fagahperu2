@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Crm;
 
+use App\Livewire\Forms\CustomerForm;
 use App\Livewire\Forms\NegocioForm;
 use App\Models\Crm\CustomerType;
 use App\Models\Customer;
@@ -21,6 +22,7 @@ class NegocioLive extends Component
     use WithPagination, WithoutUrlPagination, LivewireAlert, WithFileUploads;
 
     public NegocioForm $negocioForm;
+    public CustomerForm $customerForm;
     public $search = '';
     public $num = 10;
     public $isActive = 1;
@@ -28,6 +30,8 @@ class NegocioLive extends Component
     public $isOpenModalExport = false;
     public $dateNow;
     public $selectedOption;
+    public $estadoFilter;
+    public $isOpenCustomer;
     protected $listeners = ['select2Changed' => 'handleSelect2Changed'];
 
     public function handleSelect2Changed($value)
@@ -44,27 +48,33 @@ class NegocioLive extends Component
     public function negocios()
     {
         $search = $this->search;
-        return Negocio::where(function ($query) use ($search) {
-            $query->orWhereHas('customer', function ($query) use ($search) {
-                $query->where('code', 'like', '%' . $search . '%')
-                      ->orWhere('first_name', 'like', '%' . $search . '%');
+        $negocios = Negocio::with(['customer', 'user'])
+            ->when($search, function ($query, $search) {
+            $query->where('code', 'LIKE', '%' . $search . '%')
+                  ->orWhere('name', 'LIKE', '%' . $search . '%')
+                  ->orWhereHas('customer', function ($query) use ($search) {
+                  $query->where('code', 'LIKE', '%' . $search . '%')
+                    ->orWhere('first_name', 'LIKE', '%' . $search . '%');
+                  })
+                  ->orWhereHas('user', function ($query) use ($search) {
+                  $query->where('name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('email', 'LIKE', '%' . $search . '%');
+                  });
             })
-            ->orWhereHas('user', function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                      ->orWhere('email', 'like', '%' . $search . '%');
+            ->when($this->estadoFilter, function ($query) {
+            $query->where('stage', $this->estadoFilter);
             })
-            ->orWhere('code', 'LIKE', '%' . $search . '%')
-            ->orWhere('name', 'LIKE', '%' . $search . '%');
-        })
-        ->where('isActive', $this->isActive)
-        ->latest()
-        ->paginate($this->num, '*', 'page');
+            ->where('isActive', $this->isActive)
+            ->latest()
+            ->paginate($this->num, ['*'], 'page');
+
+        return $negocios;
     }
 
     public function render()
     {
-        $customers = Customer::where('isActive', 1)->get();
-        $users = User::where('isActive', 1)->get();
+        $customers = Customer::where('isActive', 1)->latest()->get();
+        $users = User::where('isActive', 1)->latest()->get();
         $customerTypes = CustomerType::where('isActive', 1)->get();
         return view('livewire.crm.negocio-live', compact('customers', 'users', 'customerTypes'));
     }
@@ -135,6 +145,42 @@ class NegocioLive extends Component
         $this->resetPage();
     }
 
+    public function createCustomer()
+    {
+        $this->customerForm->reset();
+        $this->isOpenCustomer = true;
+    }
+    public function createCustomerForm()
+    {
+        $customer  = $this->customerForm->storeId();
+        if ($customer) {
+            $this->message('success', 'En hora buena!', 'Registro creado correctamente!');
+            $this->negocioForm->setCustomerId($customer);
+            //dd($this->negocioForm->customer_id);
+            $this->isOpenCustomer = false;
+        } else {
+            $this->message('error', 'Error!', 'Verifique los datos ingresados!');
+        }
+    }
+    public function buscarDocumento()
+    {
+        $data = buscar_documento_h($this->customerForm->type_code, $this->customerForm->code);
+        try {
+            if ($data['respuesta'] == 'ok') {
+                if ($this->customerForm->type_code == 'dni') {
+                    $this->customerForm->first_name = $data['data']->nombre;
+                } else {
+                    $this->customerForm->first_name = $data['data']->razon_social;
+                    $this->customerForm->address = $data['data']->direccion;
+                }
+                $this->message('success', 'En hora buena!', 'Documento encontrado correctamente!');
+            } else {
+                $this->message('error', 'Error!', 'Verifique los datos ingresados!');
+            }
+        } catch (\Throwable $th) {
+            $this->message('error', 'Fatal!', $data['data_resp']);
+        }
+    }
     private function message($tipo, $tittle, $message)
     {
         $this->alert($tipo, $tittle, [
