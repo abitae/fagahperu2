@@ -39,14 +39,14 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                                 <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">
-                                    Users
+                                    marcas
                                 </span>
                             </div>
                         </li>
                     </ol>
                 </nav>
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                    All brands
+                    MARCAS
                 </h1>
             </div>
             <div class="sm:flex">
@@ -71,10 +71,10 @@
                         Import
                     </x-button.button-upload>
                     @if ($isOpenModal)
-                        <x-modal title="{{ isset($brandForm->brand) ? 'Update brand' : 'Create brand' }}" maxWidth='sm'>
+                        <x-modal title="{{ isset($brandForm->brand) ? 'ACTUALIZAR MARCA' : 'CREAR MARCA' }}" maxWidth='sm'>
                             <form class="form"
                                 wire:submit="{{ isset($brandForm->brand) ? 'updateBrand' : 'createBrand' }}">
-                                <div class="p-4 md:p-5 space-y-4">
+                                <div class="p-4 space-y-4 md:p-5">
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6 sm:col-span-6">
                                             <x-text-input wire:model.live='brandForm.code' type='text' for='code'
@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                    class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5 dark:border-gray-600">
                                     <x-button.button-danger type="button" wire:click="$toggle('isOpenModal')">
                                         Cancel
                                     </x-button.button-danger>

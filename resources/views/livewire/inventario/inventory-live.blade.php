@@ -136,7 +136,8 @@
                                 <tr wire:key='inventory-{{ $item->id }}'
                                     class="transition-colors border-b hover:bg-muted/50">
                                     <td class="p-4 pr-0 font-medium align-middle">
-                                        <span class="text-white bg-green-400 text-md">{{ $item->product->code_entrada }}</span>
+                                        <span class="text-white bg-green-400 text-md">{{ $item->product->code_entrada
+                                            }}</span>
                                         @forelse ($item->product->codexits as $codexit)
 
                                         <div class="grid grid-cols-2">

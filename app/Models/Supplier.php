@@ -18,8 +18,5 @@ class Supplier extends Model
         'archivo',
         'isActive',
     ];
-    public function inventories()
-    {
-        return $this->hasMany(InventoryEntry::class);
-    }
+
 }

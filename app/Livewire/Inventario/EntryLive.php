@@ -3,10 +3,11 @@
 namespace App\Livewire\Inventario;
 
 use App\Livewire\Forms\EntryForm;
+use App\Models\Brand;
 use App\Models\ProductStore;
-use App\Models\Supplier;
+
 use App\Models\Warehouse;
-use Illuminate\Support\Facades\Redirect;
+
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -15,7 +16,7 @@ class EntryLive extends Component
     use LivewireAlert;
     public $warehouse;
     public $product = 1; //select2
-    public $supplier = 1; //select2
+    public $brand = 1; //select2
     public EntryForm $entryForm;
     public function mount($id)
     {
@@ -25,13 +26,13 @@ class EntryLive extends Component
     }
     public function render()
     {
-        $suppliers = Supplier::all();
-        $products = ProductStore::all();
-        return view('livewire.inventario.entry-live', compact('suppliers', 'products'));
+        $brands = Brand::where('isActive', true)->get();
+        $products = ProductStore::where('isActive', true)->get();
+        return view('livewire.inventario.entry-live', compact('brands', 'products'));
     }
     public function createEntry()
     {
-        if ($this->entryForm->store($this->warehouse, $this->product, $this->supplier)) {
+        if ($this->entryForm->store($this->warehouse, $this->product, $this->brand)) {
             $this->message('success', 'En hora buena!', 'Registro creado correctamente!');
             $this->entryForm->reset();
         } else {

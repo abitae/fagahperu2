@@ -14,7 +14,7 @@ class BrandForm extends Form
     #[Validate('required|min:5|unique:brands')]
     public $code = '';
     public $name = '';
-    public $isActive = false;
+    public $isActive = true;
     public function setBrand(Brand $brand)
     {
         $this->brand = $brand;

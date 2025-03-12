@@ -17,4 +17,8 @@ class Brand extends Model
     {
         return $this->hasMany(Product::class);
     }
+    public function inventories()
+    {
+        return $this->hasMany(InventoryEntry::class);
+    }
 }

@@ -16,7 +16,7 @@ class EntryForm extends Form
     #[Validate('required')]
     public $inventory_id = '';
     #[Validate('required')]
-    public $supplier_id = '';
+    public $brand_id = '';
     #[Validate('')]
     public $description = '';
     #[Validate('required|min:5|unique:brands')]
@@ -26,7 +26,7 @@ class EntryForm extends Form
     #[Validate('numeric|min:0')]
     public $unit_price = '';
 
-    public function store($warehouse, $product, $supplier)
+    public function store($warehouse, $product, $brand)
     {
         try {
 
@@ -46,7 +46,7 @@ class EntryForm extends Form
 
             InventoryEntry::create([
                 'inventory_id' => $inventario->id,
-                'supplier_id' => $supplier,
+                'brand_id' => $brand,
                 'description' => $this->description,
                 'entry_code' => ProductStore::find($product)->code_entrada,
                 'quantity' => $this->quantity,

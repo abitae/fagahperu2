@@ -66,20 +66,19 @@
                                     <div class="p-4 space-y-4 md:p-5">
                                         <div class="grid grid-cols-6 gap-6">
                                             <div wire:ignore class="col-span-3 sm:col-span-3">
-                                                <label for="supplier_id">Proveedor</label>
+                                                <label for="brand_id">Marca</label>
                                                 <div wire:ignore>
-                                                    <select id="supplier_id"
+                                                    <select id="brand_id"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-                                                        @forelse ($suppliers as $item)
+                                                        @forelse ($brands as $item)
                                                             <option value="{{ $item->id }}">{{ $item->id }}
-                                                                {{ $item->first_name }}
-                                                                {{ $item->last_name }}</option>
+                                                                {{ $item->name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
                                                 </div>
-                                                @error('entryForm.supplier_id')
+                                                @error('entryForm.brand_id')
                                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
                                                             class="font-medium">Error!</span>
                                                         {{ $message }}.</p>
@@ -149,12 +148,12 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('#supplier_id').select2({
+            $('#brand_id').select2({
                 theme: "classic",
                 width: 'resolve',
             });
-            $('#supplier_id').on('change', function() {
-                @this.set('supplier', $(this).val());
+            $('#brand_id').on('change', function() {
+                @this.set('brand', $(this).val());
             });
         });
         $(document).ready(function() {

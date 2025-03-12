@@ -10,15 +10,15 @@ class InventoryEntry extends Model
 
     protected $fillable = [
         'inventory_id',
-        'supplier_id',
+        'brand_id',
         'description',
         'entry_code',
         'quantity',
         'unit_price',
     ];
-    public function supplier()
+    public function brand()
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(Brand::class);
     }
     public function inventory()
     {
