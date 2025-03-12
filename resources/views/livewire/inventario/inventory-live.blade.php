@@ -55,7 +55,7 @@
                         <x-select-input wire:model.live='warehouse_id' label='' for='warehouse'>
                             <option value="">Seleccione un almacen</option>
                             @forelse($warehouses as $warehouse)
-                                <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                            <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
                             @empty
                             @endforelse
                         </x-select-input>
@@ -74,10 +74,9 @@
                     class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
                     <label for="search" class="sr-only">Search</label>
                     <div class="relative mt-1 lg:w-64 xl:w-96">
-                        <a href='{{ route('inventario.product') }}'
-                            class="inline-flex items-center justify-center px-3 text-sm font-medium text-white transition-colors bg-purple-600 border rounded-md whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground h-9">
-                            Lista productos
-                        </a>
+                        <x-button.button-pluss-purple wire:click="create">
+                            Create producto
+                        </x-button.button-pluss-purple>
                     </div>
                 </div>
             </div>
@@ -91,25 +90,25 @@
                     <h1 class="text-2xl font-bold">Inventario</h1>
                     <div class="flex gap-2">
                         @if ($warehouse_id)
-                            <a href='{{ route('inventario.entry', $warehouse_id) }}'
-                                class="inline-flex items-center justify-center px-3 text-sm font-medium text-white transition-colors bg-green-600 border rounded-md whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground h-9">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="M12 5v14"></path>
-                                </svg>
-                                Entrada
-                            </a>
-                            <a href='{{ route('inventario.exit', $warehouse_id) }}'
-                                class="inline-flex items-center justify-center px-3 text-sm font-medium text-white transition-colors bg-red-600 border rounded-md whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground h-9">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                    <path d="M5 12h14"></path>
-                                </svg>
-                                Salida
-                            </a>
+                        <a href='{{ route('inventario.entry', $warehouse_id) }}'
+                            class="inline-flex items-center justify-center px-3 text-sm font-medium text-white transition-colors bg-green-600 border rounded-md whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground h-9">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="w-4 h-4 mr-2">
+                                <path d="M5 12h14"></path>
+                                <path d="M12 5v14"></path>
+                            </svg>
+                            Registrar Entrada
+                        </a>
+                        <a href='{{ route('inventario.exit', $warehouse_id) }}'
+                            class="inline-flex items-center justify-center px-3 text-sm font-medium text-white transition-colors bg-red-600 border rounded-md whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground h-9">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="w-4 h-4 mr-2">
+                                <path d="M5 12h14"></path>
+                            </svg>
+                            Registrar Salida
+                        </a>
                         @endif
                     </div>
                 </div>
@@ -118,51 +117,62 @@
                         <table class="w-full text-sm caption-bottom dark:text-white">
                             <thead class="border-b">
                                 <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                    <th
-                                        class="h-12 px-4 pr-0 font-medium text-left align-middle text-muted-foreground">
+                                    <th class="h-12 px-4 pr-0 font-medium text-left align-middle text-muted-foreground">
                                         Producto
                                     </th>
-                                    <th
-                                        class="h-12 px-4 pr-0 font-medium text-left align-middle text-muted-foreground">
+                                    <th class="h-12 px-4 pr-0 font-medium text-left align-middle text-muted-foreground">
                                         Almacen
                                     </th>
-                                    <th
-                                        class="h-12 px-4 pr-0 font-medium text-left align-middle text-muted-foreground">
+                                    <th class="h-12 px-4 pr-0 font-medium text-left align-middle text-muted-foreground">
                                         Stock
                                     </th>
-                                    <th
-                                        class="h-12 px-4 pr-0 font-medium text-left align-middle text-muted-foreground">
-                                        Code Salida
+                                    <th class="h-12 px-4 pr-0 font-medium text-left align-middle text-muted-foreground">
+                                        ACCIONES
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="border-0">
                                 @forelse ($inventories as $item)
-                                    <tr wire:key='inventory-{{ $item->id }}'
-                                        class="transition-colors border-b hover:bg-muted/50">
-                                        <td class="p-4 pr-0 font-medium align-middle">
-                                            {{ $item->product->code_entrada }}
-                                        </td>
-                                        <td class="p-4 pr-0 align-middle">
-                                            {{ $item->warehouse->name }}
-                                        </td>
-                                        <td class="p-4 pr-0 align-middle">
-                                            {{ $item->quantity }}
-                                        </td>
-                                        <td class="p-4 pr-0 align-middle">
-                                            @forelse ($item->product->codexits as $item)
-                                                <span wire:key='codexits-{{ $item->id }}'
-                                                    class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-green-400 border border-green-100 dark:border-green-500">
-                                                    {{ $item->name }}
-                                                </span>
-                                            @empty
-                                                <div
-                                                    class="bg-red-300 rounded-md badge badge-light-danger fw-bold dark:text-gray-700">
-                                                    No codes
-                                                </div>
-                                            @endforelse
-                                        </td>
-                                    </tr>
+                                <tr wire:key='inventory-{{ $item->id }}'
+                                    class="transition-colors border-b hover:bg-muted/50">
+                                    <td class="p-4 pr-0 font-medium align-middle">
+                                        <span class="text-white bg-green-400 text-md">{{ $item->product->code_entrada }}</span>
+                                        @forelse ($item->product->codexits as $codexit)
+
+                                        <div class="grid grid-cols-2">
+                                            <div class="p-1 text-xs border border-gray-400 rounded-lg">
+                                                {{ $codexit->name }}
+                                            </div>
+                                            <div>
+                                                <x-button.button-delete2 wire:click='deleteExit({{ $codexit->id }})'
+                                                    wire:confirm.prompt="Estas seguro de eliminar registro?\n\nEscriba '{{ $codexit->name }}' para confirmar!|{{ $codexit->name }}">
+                                                </x-button.button-delete2>
+                                            </div>
+                                        </div>
+                                        @empty
+                                        <div
+                                            class="bg-red-300 rounded-md badge badge-light-danger fw-bold dark:text-gray-700">
+                                            No codes
+                                        </div>
+                                        @endforelse
+                                    </td>
+                                    <td class="p-4 pr-0 align-middle">
+                                        {{ $item->warehouse->name }}
+                                    </td>
+                                    <td class="p-4 pr-0 align-middle">
+                                        {{ $item->quantity }}
+                                    </td>
+                                    <td>
+                                        <x-button.button-edit2 wire:click='addCodeExit({{ $item->id }})'>Codes
+                                        </x-button.button-edit2>
+                                        <x-button.button-edit wire:click='update({{ $item->id }})'>Edit
+                                        </x-button.button-edit>
+                                        <x-button.button-delete wire:click='delete({{ $item->id }})'
+                                            wire:confirm.prompt="Estas seguro de eliminar registro?\n\nEscriba '{{ $item->product->code_entrada }}' para confirmar!|{{ $item->product->code_entrada }}">
+                                            Eliminar
+                                        </x-button.button-delete>
+                                    </td>
+                                </tr>
                                 @empty
                                 @endforelse
                             </tbody>
@@ -173,4 +183,5 @@
             </div>
         </div>
     </div>
+    @include('livewire.inventario.producto-modal')
 </div>

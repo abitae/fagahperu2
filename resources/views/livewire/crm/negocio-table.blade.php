@@ -7,6 +7,10 @@
                     <tr>
                         <th scope="col"
                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                            Fecha / Estado
+                        </th>
+                        <th scope="col"
+                            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                             Code
                         </th>
                         <th scope="col"
@@ -22,10 +26,7 @@
                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                             Asignado
                         </th>
-                        <th scope="col"
-                            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                            Fecha / Estado
-                        </th>
+
 
                         <th scope="col"
                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -36,22 +37,6 @@
                 <tbody class="divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                     @forelse ($this->negocios as $negocio)
                     <tr wire:key='negocioo-{{ $negocio->id }}' class="border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
-                            {{ $negocio->code }}
-                        </td>
-                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
-                            <p class="mb-1 text-xs text-gray-700 text-hover-primary">
-                                <span>{{ $negocio->name }}</span>
-                            </p>
-                        </td>
-                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
-
-                            {{ $negocio->customer->first_name }}
-
-                        </td>
-                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
-                            {{ $negocio->user->name }}
-                        </td>
                         <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
                             {{ $negocio->date_closing }} <br>
                             {{ $negocio->stage }} <br>
@@ -78,6 +63,23 @@
                                 {{ $negocio->isActive ? 'Active' : 'Disabled' }}
                             </button>
                         </td>
+                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
+                            {{ $negocio->code }}
+                        </td>
+                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
+                            <p class="mb-1 text-xs text-gray-700 text-hover-primary">
+                                <span>{{ $negocio->name }}</span>
+                            </p>
+                        </td>
+                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
+
+                            {{ $negocio->customer->first_name }}
+
+                        </td>
+                        <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
+                            {{ $negocio->user->name }}
+                        </td>
+
                         <td class="p-4 space-x-2 whitespace-nowrap">
                             <x-button.button-edit wire:click='update({{ $negocio->id }})'>
                             </x-button.button-edit>

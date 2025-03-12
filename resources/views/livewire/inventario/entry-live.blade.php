@@ -61,9 +61,8 @@
                             </div>
                         </div>
                         <div class="overflow-x-auto">
-                            <div class="relative w-full overflow-auto bg-green-300 border border-green-700 rounded-lg">
-
-                                <form class="form" wire:submit='createEntry'>
+                            <div class="relative w-full overflow-auto bg-gray-300 border border-green-700 rounded-lg">
+                                <form class="form" wire:submit.prevent='createEntry'>
                                     <div class="p-4 space-y-4 md:p-5">
                                         <div class="grid grid-cols-6 gap-6">
                                             <div wire:ignore class="col-span-3 sm:col-span-3">
