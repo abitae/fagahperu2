@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-span-6 sm:col-span-2">
                     <x-text-input wire:model.live='contactForm.email' type='email'
-                        for='email' label='Email' placeholder='Ingrese email' required />
+                        for='email' label='Email' placeholder='Ingrese email' />
                     @error('contactForm.email')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
                                 class="font-medium">Error!</span> {{ $message }}.</p>
