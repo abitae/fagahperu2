@@ -92,7 +92,7 @@ class NegocioLive extends Component
 
     public function createNegocio()
     {
-        
+
         if ($this->negocioForm->store()) {
             $this->message('success', 'En hora buena!', 'Registro creado correctamente!');
             $this->isOpenModal = false;
@@ -157,7 +157,6 @@ class NegocioLive extends Component
         if ($customer) {
             $this->message('success', 'En hora buena!', 'Registro creado correctamente!');
             $this->negocioForm->setCustomerId($customer);
-            //dd($this->negocioForm->customer_id);
             $this->isOpenCustomer = false;
         } else {
             $this->message('error', 'Error!', 'Verifique los datos ingresados!');

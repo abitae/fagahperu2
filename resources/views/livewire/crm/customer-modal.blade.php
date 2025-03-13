@@ -34,7 +34,7 @@
 
                 </div>
                 <div>
-                    <x-select-input wire:model.live="customerForm.type_id" for='rol' label='Tipo documento'>
+                    <x-select-input wire:model.live="customerForm.type_id" for='rol' label='Tipo cliente'>
                         <option>*Select option</option>
                         @forelse ($customerTypes as $customerType)
                             <option value="{{ $customerType->id }}">{{ $customerType->name }}</option>

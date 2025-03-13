@@ -46,7 +46,7 @@
                     </ol>
                 </nav>
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                    Clientes
+                    CLIENTES
                 </h1>
             </div>
             <div class="sm:flex">
@@ -54,9 +54,20 @@
                     class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
                     <label for="customers-search" class="sr-only">Search</label>
                     <div class="relative mt-1 lg:w-64 xl:w-96">
-                        <input type="text" wire:model.live='search'
+                        <input type="search" wire:model.live='search'
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Search for customers">
+                    </div>
+                    <div class="relative pr-2 md:w-40">
+                        <select wire:model.live="tipoClienteFilter" id="tipoClienteFilter"
+                            class="block text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">*tipo cliente*</option>
+                            @forelse ($customerTypes as $customerType)
+                            <option value="{{ $customerType->id }}">{{ $customerType->name }}</option>
+                            @empty
+                            <option value="">No hay tipos de documentos</option>
+                            @endforelse
+                        </select>
                     </div>
                 </div>
                 <div class="flex items-center ml-auto space-x-2 sm:space-x-3">

@@ -90,7 +90,7 @@
                     <h1 class="text-2xl font-bold">Inventario</h1>
                     <div class="flex gap-2">
                         @if ($warehouse_id)
-                        <a href='{{ route('inventario.entry', $warehouse_id) }}'
+                        <a href='{{ route(' inventario.entry', $warehouse_id) }}'
                             class="inline-flex items-center justify-center px-3 text-sm font-medium text-white transition-colors bg-green-600 border rounded-md whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground h-9">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -100,7 +100,7 @@
                             </svg>
                             Registrar Entrada
                         </a>
-                        <a href='{{ route('inventario.exit', $warehouse_id) }}'
+                        <a href='{{ route(' inventario.exit', $warehouse_id) }}'
                             class="inline-flex items-center justify-center px-3 text-sm font-medium text-white transition-colors bg-red-600 border rounded-md whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-input bg-background hover:bg-accent hover:text-accent-foreground h-9">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -132,12 +132,23 @@
                                 </tr>
                             </thead>
                             <tbody class="border-0">
+                                @if($inventories->isEmpty())
+                                <tr>
+                                    <td colspan="4" class="p-4 pr-0 font-medium align-middle">
+                                        <div
+                                            class="bg-red-300 rounded-md badge badge-light-danger fw-bold dark:text-gray-700">
+                                            No hay registros
+                                        </div>
+                                    </td>
+                                </tr>
+                                @else
                                 @forelse ($inventories as $item)
                                 <tr wire:key='inventory-{{ $item->id }}'
                                     class="transition-colors border-b hover:bg-muted/50">
                                     <td class="p-4 pr-0 font-medium align-middle">
-                                        <span class="text-white bg-green-400 text-md">{{ $item->product->code_entrada
-                                            }}</span>
+                                        <span class="text-white bg-green-400 text-md">
+                                            {{ $item->product->code_entrada }}
+                                        </span>
                                         @forelse ($item->product->codexits as $codexit)
 
                                         <div class="grid grid-cols-2">
@@ -176,6 +187,7 @@
                                 </tr>
                                 @empty
                                 @endforelse
+                                @endif
                             </tbody>
                         </table>
                         {{ $inventories->links(data: ['scrollTo' => false]) }}

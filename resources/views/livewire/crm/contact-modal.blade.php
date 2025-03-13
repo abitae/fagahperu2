@@ -19,7 +19,7 @@
                 <div class="col-span-6 sm:col-span-4">
                     <x-text-input wire:model.live='contactForm.code' type='text'
                         for='code' label='Numero documento'
-                        placeholder='Ingrese numero documento' required />
+                        placeholder='Ingrese numero documento' />
                     @error('contactForm.code')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
                                 class="font-medium">Error!</span> {{ $message }}.</p>

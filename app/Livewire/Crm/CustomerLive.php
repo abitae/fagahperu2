@@ -31,7 +31,7 @@ class CustomerLive extends Component
     public $isOpenModalExport = false;
     public $isOpenModalAutorization = false;
     public $dateNow;
-
+    public $tipoClienteFilter;
     public $line_atutorization = 1;
     public function mount()
     {
@@ -40,14 +40,16 @@ class CustomerLive extends Component
     #[Computed]
     public function customers()
     {
-
-        return Customer::where(
-            fn($query)
-            => $query->orWhere('code', 'LIKE', '%' . $this->search . '%')
+        $customer = Customer::query();
+        $customer->when($this->search, function ($query) {
+            $query->where('code', 'LIKE', '%' . $this->search . '%')
                 ->orWhere('first_name', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('email', 'LIKE', '%' . $this->search . '%')
-        )
-            ->paginate($this->num, '*', 'page');
+                ->orWhere('email', 'LIKE', '%' . $this->search . '%');
+        });
+        if ($this->tipoClienteFilter) {
+            $customer->where('type_id', $this->tipoClienteFilter);
+        }
+        return $customer->paginate($this->num, '*', 'page');
     }
     public function render()
     {

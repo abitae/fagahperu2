@@ -31,6 +31,7 @@ class InventoryLive extends Component
         $suppliers = Supplier::all();
         $products = ProductStore::all();
         $warehouses = Warehouse::where('isActive', true)->get();
+        
         $inventories = Inventory::query();
         if($this->warehouse_id){
             $inventories = $inventories->where('warehouse_id', $this->warehouse_id);
