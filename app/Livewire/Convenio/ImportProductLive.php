@@ -4,6 +4,7 @@ namespace App\Livewire\Convenio;
 
 use App\Imports\ProductsImport;
 use App\Models\ProductData;
+use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -31,7 +32,7 @@ class ImportProductLive extends Component
             Excel::import(new ProductsImport, $this->file);
             $this->message('success', 'En hora buena!', 'Archivo procesado correctamente!');
             $this->file = null;
-            infoLog('CM import', auth()->user()->email);
+            infoLog('CM import', Auth::user()->name . ' importo productos');
         } catch (\Exception $e) {
             $this->message('error', 'Error!', 'No se pudo procesar el archivo!');
             $this->file = null;

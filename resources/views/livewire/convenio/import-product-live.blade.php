@@ -67,13 +67,13 @@
                             </svg>
                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
                                 @if ($file)
-                                    <span class="font-semibold">
-                                        Click to procesar archivo excel
-                                    </span>
+                                <span class="font-semibold">
+                                    Click to procesar archivo excel
+                                </span>
                                 @else
-                                    <span class="font-semibold">
-                                        Click to upload archivo excel
-                                    </span>
+                                <span class="font-semibold">
+                                    Click to upload archivo excel
+                                </span>
                                 @endif
 
                             </p>
@@ -82,16 +82,17 @@
                         </div>
                         <form wire:submit='import' enctype="multipart/form-data">
                             <div>
-                                <input wire:model='file' id="dropzone-file" wire:loading.attr="disabled" wire:target='import' type="file" class="hidden" />
+                                <input wire:model='file' id="dropzone-file" wire:loading.attr="disabled"
+                                    wire:target='import' type="file" class="hidden" />
                                 @if ($file)
-                                    <x-button.button-process type='submit'>
-                                        <div wire:loading.remove wire:target='import'>
-                                            Procesar
-                                        </div>
-                                        <div wire:loading wire:target='import'>
-                                            Procesando<i class="fa-solid fa-spinner fa-spin-pulse"></i>
-                                        </div>
-                                    </x-button.button-process>
+                                <x-button.button-process type='submit'>
+                                    <div wire:loading.remove wire:target='import'>
+                                        Procesar
+                                    </div>
+                                    <div wire:loading wire:target='import'>
+                                        Procesando<i class="fa-solid fa-spinner fa-spin-pulse"></i>
+                                    </div>
+                                </x-button.button-process>
                                 @endif
                             </div>
                         </form>

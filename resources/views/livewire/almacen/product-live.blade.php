@@ -5,4 +5,6 @@
         @include('livewire.almacen.product-filtro')
     </div>
     @include('livewire.almacen.product-table')
+    @include('livewire.almacen.product-modal')
+    @include('livewire.almacen.product-import')
 </div>

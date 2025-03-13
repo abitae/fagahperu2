@@ -47,8 +47,7 @@
         </h1>
     </div>
     <div class="flex">
-        <div
-            class="items-center mb-3 dark:divide-gray-700">
+        <div class="items-center mb-3 dark:divide-gray-700">
             <div class="relative mt-1 md:w-64">
                 <input type="search" wire:model.live='search'
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -57,18 +56,18 @@
 
         </div>
         <div class="flex items-center ml-auto space-x-2">
-            
+
             <x-button.button-pluss-purple wire:click="create">
                 Create
             </x-button.button-pluss-purple>
-            @include('livewire.almacen.product-modal')
+
             <x-button.button-download wire:click="export">
                 Exportar
             </x-button.button-download>
             <x-button.button-upload wire:click="modalImport">
                 Importar
             </x-button.button-upload>
-            @include('livewire.almacen.product-import')
+
         </div>
     </div>
 </div>
