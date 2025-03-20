@@ -64,7 +64,7 @@
                 <div class="col-span-6 sm:col-span-2">
                     <x-text-input wire:model.live='contactForm.phone' type='text'
                         for='phone' label='Telefono' placeholder='Ingrese telefono'
-                        required />
+                        />
                     @error('contactForm.phone')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
                                 class="font-medium">Error!</span> {{ $message }}.</p>
@@ -83,8 +83,7 @@
                 <div class="col-span-6 sm:col-span-6">
 
                     <x-text-input wire:model.live='contactForm.address' type='text'
-                        for='address' label='Direccion' placeholder='Ingrese address'
-                        required />
+                        for='address' label='Direccion' placeholder='Ingrese address'/>
                     @error('contactForm.address')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
                                 class="font-medium">Error!</span> {{ $message }}.</p>

@@ -132,7 +132,7 @@
                                 </tr>
                             </thead>
                             <tbody class="border-0">
-                                @if($inventories->isEmpty())
+                                @if($inventories)
                                 <tr>
                                     <td colspan="4" class="p-4 pr-0 font-medium align-middle">
                                         <div

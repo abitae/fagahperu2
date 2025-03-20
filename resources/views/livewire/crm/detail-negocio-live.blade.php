@@ -66,31 +66,31 @@
                 <div class="grid grid-flow-col grid-rows-4 gap-1">
                     <div>
                         <div class="grid grid-cols-4">
-                            <div>Codigo {{ $this->negocioForm->code }}</div>
-                            <div>Name {{ $this->negocioForm->name }}</div>
-                            <div>Prioridad {{ $this->negocioForm->priority }}</div>
+                            <div>Codigo {{ $negocioForm->code }}</div>
+                            <div>Name {{ $negocioForm->name }}</div>
+                            <div>Prioridad {{ $negocioForm->priority }}</div>
                         </div>
                     </div>
                     <div>
                         <div class="grid grid-cols-4">
-                            <div col-span-2>Asignado {{ $this->negocioForm->negocio->user->name }}</div>
+                            <div col-span-2>Asignado {{ $negocioForm->negocio->user->name }}</div>
                             <div></div>
-                            <div>Cliente {{ $this->negocioForm->negocio->customer->first_name }}</div>
+                            <div>Cliente {{ $negocioForm->negocio->customer->first_name }}</div>
                         </div>
                     </div>
                     <div>
                         <div class="grid grid-cols-4">
-                            <div>date closing {{ $this->negocioForm->date_closing }}</div>
+                            <div>date closing {{ $negocioForm->date_closing }}</div>
                             <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                S/ {{ $this->negocioForm->monto_aprox }}
+                                S/ {{ $negocioForm->monto_aprox }}
                             </div>
-                            <div>Estado {{ $this->negocioForm->stage }}</div>
+                            <div>Estado {{ $negocioForm->stage }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="grid grid-flow-col grid-rows-1 gap-1">
                     <div>
-                        description {{ $this->negocioForm->description }}
+                        description {{ $negocioForm->description }}
                     </div>
                 </div>
             </div>

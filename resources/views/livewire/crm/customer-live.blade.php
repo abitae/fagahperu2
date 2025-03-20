@@ -50,17 +50,16 @@
                 </h1>
             </div>
             <div class="flex gap-2">
-                <div
-                    class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                    <div class="relative mt-1 lg:w-64 xl:w-96">
+                <div class="flex gap-4">
+                    <div>
                         <input type="search" wire:model.live='search'
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Search for customers">
                     </div>
-                    <div class="relative md:w-40">
+                    <div>
                         <select wire:model.live="tipoClienteFilter" id="tipoClienteFilter"
                             class="block text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="">*tipo cliente*</option>
+                            <option value="">Todos</option>
                             @forelse ($customerTypes as $customerType)
                                 <option value="{{ $customerType->id }}">{{ $customerType->name }}</option>
                             @empty
@@ -68,7 +67,7 @@
                             @endforelse
                         </select>
                     </div>
-                    <div class="relative pr-2 md:w-40">
+                    <div>
                         <select wire:model.live="isActive" id="isActive"
                             class="block text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">Todos</option>
