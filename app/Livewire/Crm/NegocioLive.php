@@ -81,7 +81,7 @@ class NegocioLive extends Component
         }
 
         // Apply active status filter
-        if ($this->isActive) {
+        if ($this->isActive !== null) {
             $query->where('isActive', $this->isActive);
         }
 

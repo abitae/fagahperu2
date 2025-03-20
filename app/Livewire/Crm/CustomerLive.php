@@ -33,6 +33,7 @@ class CustomerLive extends Component
     public $dateNow;
     public $tipoClienteFilter;
     public $line_atutorization = 1;
+    public $isActive;
     public function mount()
     {
         $this->dateNow = Carbon::now('GMT-5')->format('Y-m-d');
@@ -48,6 +49,9 @@ class CustomerLive extends Component
         });
         if ($this->tipoClienteFilter) {
             $customer->where('type_id', $this->tipoClienteFilter);
+        }
+        if ($this->isActive !== null) {
+            $customer->where('isActive', $this->isActive);
         }
         return $customer->paginate($this->num, '*', 'page');
     }
