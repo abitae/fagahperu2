@@ -72,9 +72,9 @@
                             </p>
                         </td>
                         <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
-
-                            {{ $negocio->customer->first_name }}
-
+                            @if ($negocio->customer)
+                                {{ $negocio->customer->first_name }}
+                            @endif
                         </td>
                         <td class="p-4 text-xs font-normal text-gray-500 dark:text-gray-400">
                             {{ $negocio->user->name }}
