@@ -87,7 +87,6 @@
                             </x-button.button-view>
                         </td>
                     </tr>
-
                     @empty
                     @endforelse
                 </tbody>

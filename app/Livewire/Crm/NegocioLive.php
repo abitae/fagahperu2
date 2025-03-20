@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Livewire\Crm;
 
 use App\Livewire\Forms\CustomerForm;
@@ -13,9 +12,9 @@ use Illuminate\Support\Facades\Redirect;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
-use Livewire\WithFileUploads;
 
 class NegocioLive extends Component
 {
@@ -24,13 +23,14 @@ class NegocioLive extends Component
     public NegocioForm $negocioForm;
     public CustomerForm $customerForm;
     public $search = '';
-    public $num = 10;
-    public $isActive = 1;
-    public $isOpenModal = false;
+    public $num    = 10;
+    public $isActive;
+    public $isOpenModal       = false;
     public $isOpenModalExport = false;
     public $dateNow;
     public $selectedOption;
     public $estadoFilter;
+    public $typeFilter;
     public $isOpenCustomer;
     protected $listeners = ['select2Changed' => 'handleSelect2Changed'];
 
@@ -47,34 +47,41 @@ class NegocioLive extends Component
     #[Computed]
     public function negocios()
     {
-        $search = $this->search;
+        $search   = $this->search;
         $negocios = Negocio::with(['customer', 'user'])
-            ->when($search, function ($query, $search) {
-            $query->where('code', 'LIKE', '%' . $search . '%')
-                  ->orWhere('name', 'LIKE', '%' . $search . '%')
-                  ->orWhereHas('customer', function ($query) use ($search) {
-                  $query->where('code', 'LIKE', '%' . $search . '%')
-                    ->orWhere('first_name', 'LIKE', '%' . $search . '%');
-                  })
-                  ->orWhereHas('user', function ($query) use ($search) {
-                  $query->where('name', 'LIKE', '%' . $search . '%')
-                    ->orWhere('email', 'LIKE', '%' . $search . '%');
-                  });
+            ->when($this->search, function ($query) {
+                $query->where('code', 'LIKE', '%' . $this->search . '%')
+                    ->orWhere('name', 'LIKE', '%' . $this->search . '%')
+                    ->orWhereHas('customer', function ($query) {
+                        $query->where('code', 'LIKE', '%' . $this->search . '%')
+                            ->orWhere('first_name', 'LIKE', '%' . $this->search . '%');
+                    })
+                    ->orWhereHas('user', function ($query) {
+                        $query->where('name', 'LIKE', '%' . $this->search . '%')
+                            ->orWhere('email', 'LIKE', '%' . $this->search . '%');
+                    });
             })
             ->when($this->estadoFilter, function ($query) {
-            $query->where('stage', $this->estadoFilter);
+                $query->where('stage', $this->estadoFilter);
             })
-            ->where('isActive', $this->isActive)
+            ->when($this->typeFilter, function ($query) {
+                $query->where('type', $this->typeFilter);
+            })
+            ->when($this->isActive, function ($query) {
+                $query->where('isActive', $this->isActive);
+            })
             ->latest()
-            ->paginate($this->num, ['*'], 'page');
+            ->paginate($this->num);
+
+        return $negocios;
 
         return $negocios;
     }
 
     public function render()
     {
-        $customers = Customer::where('isActive', 1)->latest()->get();
-        $users = User::where('isActive', 1)->latest()->get();
+        $customers     = Customer::where('isActive', 1)->latest()->get();
+        $users         = User::where('isActive', 1)->latest()->get();
         $customerTypes = CustomerType::where('isActive', 1)->get();
         return view('livewire.crm.negocio-live', compact('customers', 'users', 'customerTypes'));
     }
@@ -153,7 +160,7 @@ class NegocioLive extends Component
     }
     public function createCustomerForm()
     {
-        $customer  = $this->customerForm->storeId();
+        $customer = $this->customerForm->storeId();
         if ($customer) {
             $this->message('success', 'En hora buena!', 'Registro creado correctamente!');
             $this->negocioForm->setCustomerId($customer);
@@ -171,7 +178,7 @@ class NegocioLive extends Component
                     $this->customerForm->first_name = $data['data']->nombre;
                 } else {
                     $this->customerForm->first_name = $data['data']->razon_social;
-                    $this->customerForm->address = $data['data']->direccion;
+                    $this->customerForm->address    = $data['data']->direccion;
                 }
                 $this->message('success', 'En hora buena!', 'Documento encontrado correctamente!');
             } else {
@@ -184,10 +191,10 @@ class NegocioLive extends Component
     private function message($tipo, $tittle, $message)
     {
         $this->alert($tipo, $tittle, [
-            'position' => 'top-end',
-            'timer' => 3000,
-            'toast' => true,
-            'text' => $message,
+            'position'         => 'top-end',
+            'timer'            => 3000,
+            'toast'            => true,
+            'text'             => $message,
             'timerProgressBar' => true,
         ]);
     }
