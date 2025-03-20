@@ -47,33 +47,47 @@ class NegocioLive extends Component
     #[Computed]
     public function negocios()
     {
-        $search   = $this->search;
-        $negocios = Negocio::with(['customer', 'user'])
-            ->when($this->search, function ($query) {
-                $query->where('code', 'LIKE', '%' . $this->search . '%')
-                    ->orWhere('name', 'LIKE', '%' . $this->search . '%')
-                    ->orWhereHas('customer', function ($query) {
-                        $query->where('code', 'LIKE', '%' . $this->search . '%')
-                            ->orWhere('first_name', 'LIKE', '%' . $this->search . '%');
-                    })
-                    ->orWhereHas('user', function ($query) {
-                        $query->where('name', 'LIKE', '%' . $this->search . '%')
-                            ->orWhere('email', 'LIKE', '%' . $this->search . '%');
-                    });
-            })
-            ->when($this->estadoFilter, function ($query) {
-                $query->where('stage', $this->estadoFilter);
-            })
-            ->when($this->typeFilter, function ($query) {
-                $query->where('type', $this->typeFilter);
-            })
-            ->when($this->isActive, function ($query) {
-                $query->where('isActive', $this->isActive);
-            })
-            ->latest()
-            ->paginate($this->num);
+        // Initialize base query with eager loading
+        $query = Negocio::with(['customer', 'user']);
 
-        return $negocios;
+        // Apply search filters if search term exists
+        if ($this->search) {
+            $searchTerm = '%' . trim($this->search) . '%';
+            $query->where(function ($q) use ($searchTerm) {
+                // Search in negocios table
+                $q->where('code', 'LIKE', $searchTerm)
+                  ->orWhere('name', 'LIKE', $searchTerm)
+                  // Search in related customer records
+                  ->orWhereHas('customer', function ($customerQuery) use ($searchTerm) {
+                      $customerQuery->where('code', 'LIKE', $searchTerm)
+                                  ->orWhere('first_name', 'LIKE', $searchTerm);
+                  })
+                  // Search in related user records
+                  ->orWhereHas('user', function ($userQuery) use ($searchTerm) {
+                      $userQuery->where('name', 'LIKE', $searchTerm)
+                               ->orWhere('email', 'LIKE', $searchTerm);
+                  });
+            });
+        }
+
+        // Apply stage filter
+        if ($this->estadoFilter) {
+            $query->where('stage', $this->estadoFilter);
+        }
+
+        // Apply type filter
+        if ($this->typeFilter) {
+            $query->where('type', $this->typeFilter);
+        }
+
+        // Apply active status filter
+        if ($this->isActive) {
+            $query->where('isActive', $this->isActive);
+        }
+
+        // Get paginated results
+        $negocios = $query->latest('created_at')
+                         ->paginate($this->num);
 
         return $negocios;
     }
