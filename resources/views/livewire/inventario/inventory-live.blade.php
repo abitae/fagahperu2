@@ -173,10 +173,12 @@
                                             </x-button.button-edit2>
                                             <x-button.button-edit wire:click='update({{ $item->id }})'>Edit
                                             </x-button.button-edit>
-                                            <x-button.button-delete wire:click='delete({{ $item->id }})'
+                                            @if ($item->product)
+                                                <x-button.button-delete wire:click='delete({{ $item->id }})'
                                                 wire:confirm.prompt="Estas seguro de eliminar registro?\n\nEscriba '{{ $item->product->code_entrada }}' para confirmar!|{{ $item->product->code_entrada }}">
                                                 Eliminar
                                             </x-button.button-delete>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
