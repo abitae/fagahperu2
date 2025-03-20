@@ -132,16 +132,7 @@
                                 </tr>
                             </thead>
                             <tbody class="border-0">
-                                @if($inventories)
-                                <tr>
-                                    <td colspan="4" class="p-4 pr-0 font-medium align-middle">
-                                        <div
-                                            class="bg-red-300 rounded-md badge badge-light-danger fw-bold dark:text-gray-700">
-                                            No hay registros
-                                        </div>
-                                    </td>
-                                </tr>
-                                @else
+                                
                                 @forelse ($inventories as $item)
                                 <tr wire:key='inventory-{{ $item->id }}'
                                     class="transition-colors border-b hover:bg-muted/50">
@@ -187,7 +178,7 @@
                                 </tr>
                                 @empty
                                 @endforelse
-                                @endif
+                                
                             </tbody>
                         </table>
                         {{ $inventories->links(data: ['scrollTo' => false]) }}
